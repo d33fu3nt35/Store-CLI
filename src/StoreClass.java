@@ -1,4 +1,6 @@
+import javax.sound.midi.SysexMessage;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by daniel on 5/15/17.
@@ -6,9 +8,8 @@ import java.util.Scanner;
 public class StoreClass {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-
-        // TOTAL DOUBLE = 0.00
-        // RECEIPT STRING = '' ?
+        double total = 0.0;
+        String receipt = ",";
 
         do{
             System.out.println("Enter an option.");
@@ -16,7 +17,8 @@ public class StoreClass {
             Scanner optionScan = new Scanner(System.in);
             int input = optionScan.nextInt();
             if (input == 1){
-                do{
+                while(true){
+
                     System.out.println("Enter Item Name.");
                     String itemName = optionScan.next();
 
@@ -26,12 +28,28 @@ public class StoreClass {
                     System.out.println("Enter Item Quantity");
                     int itemQuanity = optionScan.nextInt();
 
-                }while(true);
+                    total += itemPrice * itemQuanity;
+                    receipt += itemName + "," + itemPrice + "," + itemQuanity + ",";
+
+                    System.out.println("Do you wish to continue? Y/n:");
+                    String cont = optionScan.next();
+                    if (!cont.toLowerCase().equals("y")) {
+                        System.out.println(receipt.length());
+                        break;
+                    }
+                }
 
             }else if (input == 2){
+                for (int i =0; i < receipt.length()-1;) {
+                    int start = receipt.indexOf(",", i);
+                    i = receipt.indexOf(",", start+1); //end
+                    System.out.println(receipt.substring(start+1, i));
+                    System.out.println("Index is: " + i);
+
+                }
 
             }else {
-
+                System.exit(0);
             }
 
 
