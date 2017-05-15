@@ -1,4 +1,5 @@
 import javax.sound.midi.SysexMessage;
+import java.text.NumberFormat;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -40,13 +41,21 @@ public class StoreClass {
                 }
 
             }else if (input == 2){
+                int counter = 1;
                 for (int i =0; i < receipt.length()-1;) {
+                    String seperate = "\t";
                     int start = receipt.indexOf(",", i);
                     i = receipt.indexOf(",", start+1); //end
-                    System.out.println(receipt.substring(start+1, i));
-                    System.out.println("Index is: " + i);
+                    counter++;
+                    if(counter == 4){
+                        counter = 1;
+                        seperate = "\n";
+                    }
+                    System.out.printf(receipt.substring(start+1, i) + seperate);
 
                 }
+                NumberFormat in=NumberFormat.getCurrencyInstance();
+                System.out.println("Your Total:" + "\t" + in.format(total));
 
             }else {
                 System.exit(0);
